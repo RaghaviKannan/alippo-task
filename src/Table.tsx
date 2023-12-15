@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import "./Table.css";
-
-interface TableRow {
-  id: number;
-  name: string | null;
-  age: number | null;
-  city: string | null;
-  pinCode: string | null;
-}
+import TableRow from "./TableRow";
 
 interface TableProps {
   data: TableRow[];
@@ -59,20 +52,22 @@ const Table: React.FC<TableProps> = ({ data }) => {
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>SL. No</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>City</th>
-            <th>Pincode</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((item, index) => {
-            return (
+      {tableData.length === 0 ? (
+        <p>No data available.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>SL. No</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th>City</th>
+              <th>Pincode</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.map((item, index) => (
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>{item.name || "-"}</td>
@@ -94,10 +89,10 @@ const Table: React.FC<TableProps> = ({ data }) => {
                   </button>
                 </td>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       {editRowIndex !== null && (
         <EditModal
